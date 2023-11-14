@@ -1,0 +1,115 @@
+// const books = document.querySelectorAll('.bk');
+
+//       Array.from(books).forEach(function(e){
+//         e.textContent='Titus Kioko';
+//       });
+      
+const books = document.querySelectorAll('.bk');
+
+      Array.from(books).forEach(function(e){
+        e.textContent +=' (Book Title)';
+      });
+
+// const books = document.querySelector('#content');
+//       books.innerHTML = 'Books to be updated soon...';
+
+// preventDefault
+// const link = document.querySelector('id link');
+// link.addEventListener('click',function(e){
+//   e.preventDefault();
+// })
+
+// delete...
+const list = document.querySelector('#content ul');
+list.addEventListener('click', function(e){
+  if(e.target.className =='delete'){
+    const li = e.target.parentElement;
+    list.removeChild(li);
+  }
+})
+
+ // add book
+const form = document.forms['books'];
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const value = form.querySelector('input[type="text"]').value;
+  
+  // create elements
+  const li = document.createElement('li');
+  const book = document.createElement('span');
+  const del = document.createElement('span');
+
+  //add content
+  del.textContent = 'Delete';
+  book.textContent = value;
+
+  //add classes
+  book.classList.add('bk');
+  del.classList.add('delete');
+
+  // append to DOM
+  li.appendChild(book);
+  li.appendChild(del);
+  list.appendChild(li);
+
+});
+
+// Hide
+const check = document.querySelector('#check');
+check.addEventListener('change', function(e){
+  if(check.checked){
+    list.style.display = 'none';
+  }else{
+    list.style.display = 'block';
+  }
+});
+
+//Filter books
+const search = document.forms['search'].querySelector('input');
+search.addEventListener('keyup',function(e){
+  const term = e.target.value.toLowerCase();
+  const books = list.getElementsByTagName('li');
+  Array.from(books).forEach(function(book){
+    const title = book.firstElementChild.textContent;
+    if(title.toLowerCase().indexOf(term) != -1){
+      book.style.display = 'block';
+    }else{
+      book.style.display = 'none';
+    }
+  })
+});
+
+//tabbed content
+const tabs = document.querySelector('.tabs');
+const panels = document.querySelectorAll('.panel');
+tabs.addEventListener('click',function(e){
+  if(e.target.tagName == "LI"){
+    const targetPanel = document.querySelector(e.target.dataset.target);
+    panels.forEach(function(panel){
+      if(panel == targetPanel){
+        panel.classList.add('aactive');
+      }else{
+        panel.classList.remove('aactive');
+      }
+    })
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
